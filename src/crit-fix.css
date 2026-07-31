@@ -1,0 +1,72 @@
+.case-sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.case-sidebar > div:nth-child(3) {
+  order: -1;
+  margin-top: 0;
+  margin-bottom: 1.3rem;
+  padding: 1rem;
+  border: 1px solid rgba(15, 118, 110, 0.28);
+  border-radius: 0.9rem;
+  background: var(--teal-soft);
+}
+
+.case-sidebar > div:nth-child(3) + div {
+  margin-top: 0;
+}
+
+.case-sidebar > div:nth-child(3) .sidebar-label::after {
+  content: ' — strongest proof first';
+  color: var(--teal-dark);
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.case-sidebar .link-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+.case-sidebar .link-list li + li {
+  margin-top: 0.6rem;
+}
+
+.case-sidebar .link-list a {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  padding: 0.72rem 0.85rem;
+  border: 1px solid rgba(15, 118, 110, 0.24);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+}
+
+.case-sidebar .link-list li:first-child a {
+  min-height: 3.25rem;
+  border-color: var(--teal);
+  background: var(--teal);
+  color: white;
+  box-shadow: 0 0.65rem 1.4rem rgba(15, 118, 110, 0.2);
+}
+
+.case-sidebar .link-list a:hover,
+.case-sidebar .link-list a:focus-visible {
+  border-color: var(--teal-dark);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 62rem) {
+  .case-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .case-sidebar {
+    order: -1;
+    width: 100%;
+  }
+}
