@@ -1,11 +1,13 @@
 {
   "name": "flyrank-ai-portfolio",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "audit": "node scripts/site-audit.mjs",
     "build": "tsc -b && vite build",
+    "verify": "npm run audit && npm run build",
     "preview": "vite preview"
   },
   "dependencies": {
