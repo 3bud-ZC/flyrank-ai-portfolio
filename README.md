@@ -4,9 +4,26 @@ A standalone portfolio project created for the FlyRank General AI Fluency track.
 
 ## Current milestone
 
-Week 4 — Empty but Live.
+Week 5 — Ship the Ugly One.
 
-This repository is separate from the production website at `abud.fun`. It exists only for the FlyRank training portfolio and its related assignments.
+The Week 4 commit preserved the first near-blank deployment. The Week 5 build expands the same repository into a complete public sitemap with real case studies, evidence links, contact paths, a CV page, field notes, and a DNS walkthrough.
+
+This repository remains separate from the production website at `abud.fun`.
+
+## Public sitemap
+
+- Home — `#/`
+- Work — `#/work`
+- OG ERP case study — `#/work/og-erp`
+- RepoRadar AI case study — `#/work/reporadar-ai`
+- VPS Monitor Bot case study — `#/work/vps-monitor-bot`
+- About — `#/about`
+- Notes — `#/notes`
+- Contact — `#/contact`
+- CV — `#/cv`
+- DNS walkthrough — `#/dns`
+
+Hash routes are used so every public page remains reachable on GitHub Pages without a server-side router.
 
 ## Stack
 
@@ -15,6 +32,10 @@ This repository is separate from the production website at `abud.fun`. It exists
 - Vite
 - GitHub Pages
 - GitHub Actions
+
+## Project evidence
+
+The public site uses real project captures and public evidence links where available. Promotional visuals are explicitly described as secondary material. Private repositories and confidential client data are not exposed.
 
 ## Local development
 
@@ -34,8 +55,6 @@ npm run preview
 
 Every push to `main` runs the GitHub Pages workflow in `.github/workflows/deploy.yml`.
 
-GitHub Pages was configured to use GitHub Actions on July 31, 2026. This update triggers the first deployment after Pages activation.
-
-Expected public URL:
+Public URL:
 
 `https://3bud-zc.github.io/flyrank-ai-portfolio/`
