@@ -34,6 +34,8 @@ npm run preview
 
 Every push to `main` runs the GitHub Pages workflow in `.github/workflows/deploy.yml`.
 
+GitHub Pages was configured to use GitHub Actions on July 31, 2026. This update triggers the first deployment after Pages activation.
+
 Expected public URL:
 
 `https://3bud-zc.github.io/flyrank-ai-portfolio/`
