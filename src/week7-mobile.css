@@ -1,0 +1,171 @@
+/* Week 7 mobile and accessibility hardening.
+   Loaded after the core stylesheet so these rules document the real QA fixes. */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+}
+
+.primary-nav {
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.primary-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.primary-nav a {
+  min-height: 44px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: start;
+}
+
+.text-link,
+.back-link,
+.footer-links a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.project-image-wrap img,
+.case-header img {
+  image-rendering: auto;
+}
+
+@media (max-width: 42rem) {
+  .site-header {
+    gap: 0.7rem;
+    padding-block: 0.85rem;
+  }
+
+  .primary-nav {
+    scroll-snap-type: x proximity;
+    gap: 0.2rem;
+    margin-inline: -0.15rem;
+    padding-inline: 0.15rem;
+    padding-bottom: 0.35rem;
+  }
+
+  .primary-nav a {
+    padding-inline: 0.72rem;
+  }
+
+  .hero {
+    gap: 2.25rem;
+    padding-block: 2.75rem 3.75rem;
+  }
+
+  .hero-copy h1,
+  .page-intro > h1,
+  .case-header h1 {
+    font-size: clamp(2.35rem, 11.5vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+
+  .hero-lead,
+  .page-intro > p:not(.eyebrow),
+  .case-header p:last-child {
+    font-size: 1rem;
+    line-height: 1.68;
+  }
+
+  .button-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+  }
+
+  .button-row .button {
+    width: 100%;
+    min-height: 52px;
+    padding-inline: 0.9rem;
+    text-align: center;
+  }
+
+  .hero-proof {
+    padding: 1.35rem;
+    border-radius: 1.2rem;
+  }
+
+  .hero-proof strong {
+    font-size: 1.5rem;
+  }
+
+  .project-card-body,
+  .capability-card,
+  .cv-grid section,
+  .notes-list article,
+  .contact-grid a,
+  .dns-note {
+    padding: 1.15rem;
+  }
+
+  .project-image-wrap {
+    aspect-ratio: 16 / 9;
+  }
+
+  .case-header img {
+    width: 100%;
+    max-height: none;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  .case-layout {
+    padding-top: 2.2rem;
+  }
+
+  .case-main section + section {
+    margin-top: 1.9rem;
+    padding-top: 1.9rem;
+  }
+
+  .contact-grid a {
+    min-height: 5.5rem;
+  }
+
+  .site-footer {
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  .button-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-copy h1,
+  .page-intro > h1,
+  .case-header h1 {
+    font-size: clamp(2.2rem, 12vw, 3.3rem);
+  }
+}
+
+@media (hover: none) {
+  .project-card:hover,
+  .contact-grid a:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
