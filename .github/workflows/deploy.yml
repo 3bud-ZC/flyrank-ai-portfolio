@@ -3,6 +3,8 @@ name: Deploy FlyRank portfolio to GitHub Pages
 on:
   push:
     branches: ['main']
+  pull_request:
+    branches: ['main']
   workflow_dispatch:
 
 permissions:
@@ -11,12 +13,14 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,18 +33,24 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Run hardening audit
+        run: npm run audit
+
       - name: Build production site
         run: npm run build
 
       - name: Configure GitHub Pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
 
       - name: Upload GitHub Pages artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
   deploy:
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
