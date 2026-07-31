@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
+import type { FormEvent } from 'react'
+import { trackPageView } from './analytics'
 
 type Project = {
   slug: string
@@ -15,6 +17,10 @@ type Project = {
   imageAlt: string
   links: { label: string; href: string }[]
 }
+
+type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error'
+
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/abudfun@gmail.com'
 
 const projects: Project[] = [
   {
@@ -123,6 +129,41 @@ const navigation = [
   { route: 'contact', label: 'Contact', href: '#/contact' },
 ]
 
+const routeMeta: Record<string, { title: string; description: string }> = {
+  home: {
+    title: 'Abdullah Ragab — Software Systems & Automation',
+    description: 'Evidence-backed software systems, developer tools, and workflow automation case studies.',
+  },
+  work: {
+    title: 'Work — Abdullah Ragab',
+    description: 'Case studies for business systems, repository intelligence, and infrastructure automation.',
+  },
+  about: {
+    title: 'About — Abdullah Ragab',
+    description: 'Software engineering with an operations mindset and explicit evidence boundaries.',
+  },
+  notes: {
+    title: 'Build Notes — Abdullah Ragab',
+    description: 'Decisions, hardening work, and the next-case maintenance plan for the portfolio.',
+  },
+  contact: {
+    title: 'Contact — Abdullah Ragab',
+    description: 'Send one workflow that should be replaced or improved through a working contact form.',
+  },
+  cv: {
+    title: 'CV — Abdullah Ragab',
+    description: 'Software engineering education, experience, technical focus, and selected projects.',
+  },
+  dns: {
+    title: 'DNS and HTTPS Walkthrough — Abdullah Ragab',
+    description: 'A plain-language explanation of GitHub Pages, DNS, CNAME records, TLS, and HTTPS.',
+  },
+  verification: {
+    title: 'FlyRank Verification Status — Abdullah Ragab',
+    description: 'Public status page for the FlyRank AI portfolio, track evidence, and graduate badge verification.',
+  },
+}
+
 function currentRoute() {
   return window.location.hash.replace(/^#\/?/, '') || 'home'
 }
@@ -130,20 +171,35 @@ function currentRoute() {
 function App() {
   const [route, setRoute] = useState(currentRoute)
 
-  useEffect(() => {
-    const handleHashChange = () => {
-      setRoute(currentRoute())
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
-
-    window.addEventListener('hashchange', handleHashChange)
-    return () => window.removeEventListener('hashchange', handleHashChange)
-  }, [])
-
   const selectedProject = useMemo(() => {
     if (!route.startsWith('work/')) return undefined
     return projects.find((project) => project.slug === route.split('/')[1])
   }, [route])
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const nextRoute = currentRoute()
+      setRoute(nextRoute)
+      trackPageView(nextRoute)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    trackPageView(route)
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
+
+  useEffect(() => {
+    const metaKey = selectedProject ? 'work' : routeMeta[route] ? route : 'home'
+    const metadata = routeMeta[metaKey]
+    const title = selectedProject ? `${selectedProject.name} — Abdullah Ragab` : metadata.title
+    const description = selectedProject ? selectedProject.summary : metadata.description
+
+    document.title = title
+    document.querySelector('meta[name="description"]')?.setAttribute('content', description)
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', title)
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', description)
+  }, [route, selectedProject])
 
   const activeRoute = route.startsWith('work') ? 'work' : route
 
@@ -193,12 +249,19 @@ function App() {
           <CvPage />
         ) : route === 'dns' ? (
           <DnsPage />
+        ) : route === 'verification' ? (
+          <VerificationPage />
         ) : (
           <HomePage />
         )}
       </main>
 
       <footer className="site-footer">
+        <a className="flyrank-badge" href="#/verification" aria-label="Open FlyRank verification status">
+          <span>FlyRank AI</span>
+          <strong>Graduate verification</strong>
+          <small>Official badge pending issuance</small>
+        </a>
         <p>Built as a public, reviewable FlyRank AI portfolio project.</p>
         <div className="footer-links">
           <a href="#/dns">DNS walkthrough</a>
@@ -217,7 +280,7 @@ function HomePage() {
     <>
       <section className="hero section-wrap" aria-labelledby="hero-title">
         <div className="hero-copy">
-          <p className="eyebrow">FlyRank AI Portfolio · Week 5 build</p>
+          <p className="eyebrow">FlyRank AI Portfolio · Week 9 hardening build</p>
           <h1 id="hero-title">I turn fragmented manual workflows into working software systems.</h1>
           <p className="hero-lead">
             I design and build practical web applications, developer tools, and automation systems for
@@ -450,18 +513,107 @@ function AboutPage() {
 }
 
 function ContactPage() {
+  const [status, setStatus] = useState<SubmissionStatus>('idle')
+  const [message, setMessage] = useState('')
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (status === 'submitting' || status === 'success') return
+
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    const name = String(formData.get('name') ?? '').trim()
+    const email = String(formData.get('email') ?? '').trim()
+    const workflow = String(formData.get('workflow') ?? '').trim()
+    const desiredResult = String(formData.get('desired_result') ?? '').trim()
+    const honey = String(formData.get('_honey') ?? '').trim()
+
+    if (honey) return
+    if (name.length < 2 || workflow.length < 20 || desiredResult.length < 10 || !email.includes('@')) {
+      setStatus('error')
+      setMessage('Please complete every field with enough detail for a useful reply.')
+      return
+    }
+
+    setStatus('submitting')
+    setMessage('Sending your workflow securely…')
+
+    try {
+      const response = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          workflow,
+          desired_result: desiredResult,
+          _subject: `FlyRank portfolio workflow request from ${name}`,
+          _template: 'table',
+        }),
+      })
+
+      const result = (await response.json()) as { success?: string | boolean; message?: string }
+      if (!response.ok || result.success === false || result.success === 'false') {
+        throw new Error(result.message || 'The form service rejected the request.')
+      }
+
+      setStatus('success')
+      setMessage('Sent successfully. I will review the workflow and reply by email.')
+      form.reset()
+    } catch (error) {
+      setStatus('error')
+      setMessage(error instanceof Error ? error.message : 'The message could not be sent. Please try again.')
+    }
+  }
+
   return (
     <section className="section-wrap page-intro contact-page" aria-labelledby="contact-title">
-      <p className="eyebrow">Contact</p>
+      <p className="eyebrow">Working feature</p>
       <h1 id="contact-title">Send one workflow you want to replace or improve.</h1>
       <p>
-        Describe what happens today, where it breaks, who uses it, and what a useful result would look
-        like. I will respond with the first practical system boundary rather than a generic feature list.
+        This is a real end-to-end contact flow. The browser validates the input, sends one JSON request
+        to a hosted form backend, and the backend forwards the submission to my inbox.
       </p>
+
+      <form className="workflow-form" onSubmit={handleSubmit} noValidate>
+        <div className="form-grid">
+          <label>
+            Your name
+            <input name="name" type="text" autoComplete="name" minLength={2} maxLength={80} required />
+          </label>
+          <label>
+            Email address
+            <input name="email" type="email" autoComplete="email" maxLength={160} required />
+          </label>
+        </div>
+        <label>
+          What happens today, and where does it break?
+          <textarea name="workflow" minLength={20} maxLength={2000} rows={6} required />
+        </label>
+        <label>
+          What would a useful result look like?
+          <textarea name="desired_result" minLength={10} maxLength={1000} rows={4} required />
+        </label>
+        <label className="honeypot" aria-hidden="true">
+          Leave this field empty
+          <input name="_honey" type="text" tabIndex={-1} autoComplete="off" />
+        </label>
+        <div className="form-actions">
+          <button className="button primary" type="submit" disabled={status === 'submitting' || status === 'success'}>
+            {status === 'submitting' ? 'Sending…' : status === 'success' ? 'Message sent' : 'Send workflow'}
+          </button>
+          <p className={`form-status ${status}`} role="status" aria-live="polite">
+            {message || 'No account is required. Do not include passwords, API keys, or confidential client data.'}
+          </p>
+        </div>
+      </form>
 
       <div className="contact-grid">
         <a href="mailto:abudfun@gmail.com?subject=Workflow%20system%20inquiry">
-          <span>Email</span>
+          <span>Email fallback</span>
           <strong>abudfun@gmail.com</strong>
         </a>
         <a href="mailto:abudfun@gmail.com?subject=Book%20a%2020-minute%20project%20call">
@@ -485,19 +637,26 @@ function NotesPage() {
   return (
     <section className="section-wrap page-intro" aria-labelledby="notes-title">
       <p className="eyebrow">Field notes</p>
-      <h1 id="notes-title">Build decisions and future capstone space</h1>
+      <h1 id="notes-title">Build decisions and the maintenance path</h1>
       <p>
-        This page records the decisions behind the public portfolio and provides a permanent place for
-        future FlyRank work, capstone updates, and technical write-ups.
+        This page records the decisions behind the public portfolio and preserves enough context to add
+        the next case study without rebuilding the site.
       </p>
       <div className="notes-list">
         <article>
-          <time dateTime="2026-07-31">31 July 2026</time>
-          <h2>From empty deployment to complete sitemap</h2>
+          <time dateTime="2026-08-01">1 August 2026</time>
+          <h2>One dynamic feature, not several half-wired features</h2>
           <p>
-            The Week 4 milestone proved that the React, TypeScript, Vite, and GitHub Pages stack could
-            deploy reliably. Week 5 keeps the same repository and adds the full navigation, case-study
-            structure, real evidence, CV, contact paths, and DNS explanation.
+            The contact form is the single Week 8 feature. It validates input, prevents duplicate clicks
+            while sending, calls a hosted backend, and reports a clear success or failure state.
+          </p>
+        </article>
+        <article>
+          <time dateTime="2026-08-01">1 August 2026</time>
+          <h2>Hardening before launch</h2>
+          <p>
+            Week 9 adds source-level break tests, SEO metadata, analytics support, a verification route,
+            and an honest limitations list. The next case planned for this structure is FlyRank Opportunity Scout.
           </p>
         </article>
         <article>
@@ -578,8 +737,8 @@ function DnsPage() {
       <h1 id="dns-title">How this public URL, DNS, and HTTPS fit together</h1>
       <p>
         The current site is served from the clean free-host URL
-        <code>3bud-zc.github.io/flyrank-ai-portfolio/</code>. A future FlyRank subdomain can point to the
-        same hosted project without rebuilding the site.
+        <code>3bud-zc.github.io/flyrank-ai-portfolio/</code>. A custom subdomain can point to the same
+        hosted project without rebuilding the site.
       </p>
 
       <div className="dns-steps">
@@ -599,9 +758,8 @@ function DnsPage() {
           <div>
             <h2>The authoritative nameserver returns the record</h2>
             <p>
-              A future FlyRank subdomain would normally use a CNAME record. The CNAME does not copy or
-              move the website. It makes the new hostname an alias for the exact hosting target supplied
-              by GitHub Pages or another approved host.
+              A custom subdomain normally uses a CNAME record. The CNAME does not copy or move the
+              website. It makes the new hostname an alias for the hosting target supplied by GitHub Pages.
             </p>
           </div>
         </section>
@@ -623,7 +781,7 @@ function DnsPage() {
             <p>
               Once the host verifies the custom hostname, it issues a TLS certificate. The browser checks
               that certificate before showing HTTPS. The final validation is to open the address in a
-              private window, confirm the expected hostname, and verify that no certificate warning appears.
+              private window and confirm that no certificate warning appears.
             </p>
           </div>
         </section>
@@ -637,6 +795,44 @@ function DnsPage() {
           resolvers are still using a cached DNS response.
         </p>
       </aside>
+    </section>
+  )
+}
+
+function VerificationPage() {
+  return (
+    <section className="section-wrap page-intro verification-page" aria-labelledby="verification-title">
+      <p className="eyebrow">Public verification</p>
+      <h1 id="verification-title">FlyRank AI portfolio status</h1>
+      <p>
+        This page provides a stable destination for the portfolio badge and separates completed public
+        evidence from credentials that have not yet been officially issued.
+      </p>
+
+      <div className="verification-grid">
+        <article>
+          <span className="status-pill complete">Verified public evidence</span>
+          <h2>Portfolio build</h2>
+          <p>Live GitHub Pages deployment, public source history, case studies, mobile evidence, and hardening logs.</p>
+          <a href="https://github.com/3bud-ZC/flyrank-ai-portfolio" target="_blank" rel="noreferrer">
+            Review repository
+          </a>
+        </article>
+        <article>
+          <span className="status-pill pending">Pending official issuance</span>
+          <h2>FlyRank graduate badge</h2>
+          <p>
+            The footer placement and verification destination are implemented. The badge remains clearly
+            marked pending until FlyRank issues the official graduate asset and verification URL.
+          </p>
+        </article>
+        <article>
+          <span className="status-pill complete">Working feature</span>
+          <h2>Contact workflow</h2>
+          <p>The live contact form sends validated submissions through a hosted backend to the portfolio inbox.</p>
+          <a href="#/contact">Open the working form</a>
+        </article>
+      </div>
     </section>
   )
 }
