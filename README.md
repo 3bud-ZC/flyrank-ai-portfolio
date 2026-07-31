@@ -6,13 +6,34 @@ A standalone portfolio project created for the FlyRank General AI Fluency track.
 
 Week 4 — Empty but Live.
 
-## Planned stack
+This repository is separate from the production website at `abud.fun`. It exists only for the FlyRank training portfolio and its related assignments.
 
-- React
+## Stack
+
+- React 19
 - TypeScript
 - Vite
 - GitHub Pages
+- GitHub Actions
 
-## Project boundary
+## Local development
 
-This repository is separate from the production website at abud.fun and exists only for the FlyRank training portfolio and its related assignments.
+```bash
+npm install
+npm run dev
+```
+
+## Production build
+
+```bash
+npm run build
+npm run preview
+```
+
+## Deployment
+
+Every push to `main` runs the GitHub Pages workflow in `.github/workflows/deploy.yml`.
+
+Expected public URL:
+
+`https://3bud-zc.github.io/flyrank-ai-portfolio/`
