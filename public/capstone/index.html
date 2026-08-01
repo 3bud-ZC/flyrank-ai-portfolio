@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlyRank Opportunity Intelligence Studio — AI Fluency Capstone</title>
+  <meta name="description" content="A public review package for Abdullah Ragab's General AI Fluency capstone: a local-first, explainable GSC and GA4 opportunity workflow with tests, demo, source, and human-review guardrails." />
+  <meta property="og:title" content="FlyRank Opportunity Intelligence Studio — Capstone" />
+  <meta property="og:description" content="Live demo, explainable scoring, five verification cases, public source, demo video, and launch story." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://portfolio.abud.fun/capstone/" />
+  <link rel="canonical" href="https://portfolio.abud.fun/capstone/" />
+  <style>
+    :root{--ink:#101827;--muted:#5f6878;--teal:#0b837a;--teal-dark:#075e59;--wash:#eef8f6;--line:#d9e1e4;--paper:#fff;--amber:#f4a916;--shadow:0 24px 70px rgba(25,45,54,.10)}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:linear-gradient(135deg,#eef9f7 0,#f8fafb 48%,#fff 100%);color:var(--ink);font:16px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:var(--teal-dark);font-weight:750;text-underline-offset:4px} a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:4px}
+    .skip{position:absolute;left:-999px;top:1rem;background:var(--ink);color:white;padding:.8rem 1rem;border-radius:.7rem;z-index:5}.skip:focus{left:1rem}
+    .shell{width:min(1160px,calc(100% - 32px));margin:auto}.nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:24px 0;border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:.8rem;text-decoration:none;color:var(--ink)}.mark{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--teal);color:#fff;font-weight:900}.brand small{display:block;color:var(--muted);font-weight:600}
+    .navlinks{display:flex;flex-wrap:wrap;gap:1rem}.navlinks a{text-decoration:none}
+    .hero{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);gap:3rem;align-items:center;padding:88px 0 68px}.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;color:var(--teal);font-weight:900}.hero h1{font-size:clamp(2.8rem,7vw,6.4rem);line-height:.96;letter-spacing:-.06em;margin:.5rem 0 1.4rem}.lead{font-size:clamp(1.08rem,2vw,1.34rem);color:var(--muted);max-width:760px}
+    .actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:.75rem 1.15rem;border-radius:14px;text-decoration:none;border:1px solid var(--line);background:var(--paper);color:var(--ink)}.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}.btn:hover{transform:translateY(-1px)}
+    .proof{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:1.6rem;box-shadow:var(--shadow)}.proof strong{font-size:2rem;display:block}.proof ul{padding-left:1.1rem;color:var(--muted)}.status{display:inline-flex;gap:.5rem;align-items:center;padding:.45rem .7rem;border-radius:99px;background:#e8faf1;color:#12633e;font-weight:800;font-size:.84rem}.dot{width:.65rem;height:.65rem;border-radius:50%;background:#19a160}
+    section{padding:68px 0}.section-title{max-width:760px;margin-bottom:2rem}.section-title h2{font-size:clamp(2rem,4vw,3.8rem);line-height:1.05;letter-spacing:-.045em;margin:.4rem 0}.section-title p{color:var(--muted);font-size:1.08rem}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.card{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:20px;padding:1.35rem}.card h3{margin-top:0}.card p,.card li{color:var(--muted)}
+    .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:.7rem;counter-reset:steps}.step{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:1rem;min-height:170px}.step::before{counter-increment:steps;content:counter(steps);display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--wash);color:var(--teal-dark);font-weight:900;margin-bottom:.7rem}.step strong{display:block}.step span{color:var(--muted);font-size:.92rem}
+    .results{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}table{width:100%;border-collapse:collapse;min-width:780px}th,td{text-align:left;padding:1rem;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}.score{font-size:1.55rem;font-weight:900;color:var(--teal-dark)}.review{border:1px solid var(--amber);border-radius:10px;padding:.35rem .55rem;color:#8b5100;font-weight:800;font-size:.82rem;white-space:nowrap}
+    .callout{background:var(--ink);color:#fff;border-radius:26px;padding:clamp(1.4rem,4vw,3rem);display:grid;grid-template-columns:1fr 1fr;gap:2rem}.callout p,.callout li{color:#ccd4df}.callout a{color:#79e2d8}.callout h2{font-size:clamp(2rem,4vw,3.6rem);line-height:1.06;margin-top:0}
+    .story{display:grid;grid-template-columns:.75fr 1.25fr;gap:2rem}.story blockquote{margin:0;background:var(--paper);border-left:5px solid var(--teal);padding:1.4rem;border-radius:0 18px 18px 0;font-size:1.2rem}.story p{color:var(--muted)}
+    .review-path{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.review-path a{display:block;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:1.2rem;text-decoration:none;color:var(--ink)}.review-path span{display:block;color:var(--teal);font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
+    footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+    @media(max-width:900px){.hero,.callout,.story{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.flow{grid-template-columns:1fr 1fr}.review-path{grid-template-columns:1fr 1fr}.hero{padding-top:54px}}
+    @media(max-width:620px){.shell{width:min(100% - 22px,1160px)}.nav{align-items:flex-start}.navlinks{justify-content:flex-end;font-size:.92rem}.hero h1{font-size:clamp(2.8rem,16vw,4.7rem)}.grid,.flow,.review-path{grid-template-columns:1fr}.actions .btn{width:100%}section{padding:48px 0}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn:hover{transform:none}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="shell nav">
+    <a class="brand" href="https://portfolio.abud.fun/" aria-label="Open Abdullah Ragab portfolio">
+      <span class="mark">AR</span><span><strong>Abdullah Ragab</strong><small>General AI Fluency Capstone</small></span>
+    </a>
+    <nav class="navlinks" aria-label="Capstone navigation"><a href="#product">Product</a><a href="#evidence">Evidence</a><a href="#story">Story</a></nav>
+  </header>
+
+  <main id="main">
+    <section class="shell hero">
+      <div>
+        <p class="eyebrow">FlyRank AI · Final Impact Project</p>
+        <h1>Opportunity intelligence a reviewer can audit.</h1>
+        <p class="lead">FlyRank Opportunity Intelligence Studio converts approved Google Search Console and GA4 exports into a ranked, explainable content-opportunity queue. It works locally, preserves incomplete evidence, and stops every recommendation at a human-review boundary.</p>
+        <div class="actions">
+          <a class="btn primary" href="https://3bud-zc.github.io/flyrank-opportunity-workflow/" target="_blank" rel="noreferrer">Open live demo</a>
+          <a class="btn" href="https://github.com/3bud-ZC/flyrank-opportunity-workflow" target="_blank" rel="noreferrer">Review source</a>
+          <a class="btn" href="https://drive.google.com/file/d/1r4UBxmlSc0gAr8hjLZTfTA5j2GjQ15r3/view" target="_blank" rel="noreferrer">Watch demo video</a>
+        </div>
+      </div>
+      <aside class="proof" aria-label="Launch status">
+        <span class="status"><span class="dot"></span> Public and reviewable</span>
+        <p class="eyebrow">Current proof</p>
+        <strong>5 / 5 tests</strong>
+        <ul><li>Browser-only CSV processing</li><li>CSV, JSON, and Markdown exports</li><li>Human review before action</li><li>Synthetic public data only</li></ul>
+        <a href="#evidence">Follow the reviewer path →</a>
+      </aside>
+    </section>
+
+    <section class="shell" id="product">
+      <div class="section-title"><p class="eyebrow">The problem</p><h2>Dashboards show metrics. They do not explain what deserves attention first.</h2><p>SEO and content teams can export thousands of GSC and GA4 rows, but prioritization still requires manual joining, data-quality judgment, and a defensible next action.</p></div>
+      <div class="grid">
+        <article class="card"><h3>One safe input loop</h3><p>Upload schema-compatible GSC and GA4 CSVs, or use the built-in synthetic demonstration. Files remain in the browser.</p></article>
+        <article class="card"><h3>Explainable scoring</h3><p>Every rank is supported by visible demand, engagement, position, and data-quality signals rather than a hidden model response.</p></article>
+        <article class="card"><h3>Human control</h3><p>The workflow can recommend a review, but it cannot edit a website, publish content, create tickets, or approve business intent.</p></article>
+      </div>
+    </section>
+
+    <section class="shell">
+      <div class="section-title"><p class="eyebrow">How it works</p><h2>A deterministic workflow with explicit handoffs.</h2></div>
+      <div class="flow">
+        <div class="step"><strong>Validate</strong><span>Identify the two schemas and reject missing or malformed required fields.</span></div>
+        <div class="step"><strong>Normalize</strong><span>Clean landing-page paths before any aggregation or source alignment.</span></div>
+        <div class="step"><strong>Join</strong><span>Use a full outer join at landing-page level. Never invent a query-level GA4 key.</span></div>
+        <div class="step"><strong>Score</strong><span>Rank opportunities using transparent signals and documented recommendations.</span></div>
+        <div class="step"><strong>Review</strong><span>Export the brief only after the reviewer sees warnings, rationale, and limitations.</span></div>
+      </div>
+    </section>
+
+    <section class="shell">
+      <div class="section-title"><p class="eyebrow">Synthetic demonstration</p><h2>The output is ranked, readable, and still marked for review.</h2><p>The values below are public sample data, not client analytics.</p></div>
+      <div class="results" role="region" aria-label="Example ranked opportunity output" tabindex="0">
+        <table><thead><tr><th>Rank</th><th>Page and query</th><th>Score</th><th>Signals</th><th>Recommendation</th><th>Boundary</th></tr></thead><tbody>
+          <tr><td>1</td><td><strong>/services/automation</strong><br>workflow automation</td><td class="score">74</td><td>3,500 impressions<br>1.6% CTR<br>Position 7.8</td><td>Rewrite title and description, then verify query-to-page alignment.</td><td><span class="review">Needs review</span></td></tr>
+          <tr><td>2</td><td><strong>/case-studies/erp</strong><br>erp software</td><td class="score">67</td><td>1,600 impressions<br>1.4% CTR<br>Position 8.6</td><td>Strengthen the existing page around demonstrated search demand.</td><td><span class="review">Needs review</span></td></tr>
+          <tr><td>3</td><td><strong>/case-studies/monitor</strong><br>vps monitoring</td><td class="score">57</td><td>900 impressions<br>1.6% CTR<br>Position 6.9</td><td>Inspect title, evidence, and intent before changing content.</td><td><span class="review">Needs review</span></td></tr>
+        </tbody></table>
+      </div>
+    </section>
+
+    <section class="shell" id="evidence">
+      <div class="callout">
+        <div><p class="eyebrow">Verification</p><h2>Five cases test the parts most likely to produce a misleading report.</h2><p>The public application and repository preserve the same quality boundary: no silent fixes, no invented data, and no autonomous publishing.</p></div>
+        <div><ul><li>Successful new input</li><li>Missing required column</li><li>Blank anonymized query preserved</li><li>Unmatched landing pages preserved</li><li>Malformed numeric value rejected</li></ul><p><a href="https://github.com/3bud-ZC/flyrank-opportunity-workflow/blob/main/src/analysis.test.ts" target="_blank" rel="noreferrer">Open automated test source →</a></p></div>
+      </div>
+    </section>
+
+    <section class="shell" id="story">
+      <div class="section-title"><p class="eyebrow">Launch story</p><h2>From a repeated analysis task to a bounded public product.</h2></div>
+      <div class="story">
+        <blockquote>“The strongest result is not a clever score. It is a result another person can reproduce, inspect, challenge, and safely reject.”</blockquote>
+        <div><p>I started with a recurring problem: GSC and GA4 exports contain useful evidence, but the path from rows to a defensible priority is slow and easy to overstate. The first version proved the fixed workflow. The personal-agent work added reusable documentation, tests, output formats, and clear guardrails.</p><p>The final capstone connects the product to a real personal brand: a permanent portfolio domain, a public repository, a working demo, a narrated run, explainability, launch hardening, and an honest limitations record. The result is intentionally bounded. It helps a person decide where to investigate; it does not pretend to replace business judgment.</p></div>
+      </div>
+    </section>
+
+    <section class="shell">
+      <div class="section-title"><p class="eyebrow">Four-link reviewer path</p><h2>Review the outcome without reconstructing the project.</h2></div>
+      <div class="review-path">
+        <a href="https://3bud-zc.github.io/flyrank-opportunity-workflow/" target="_blank" rel="noreferrer"><span>01 · Use it</span><strong>Live browser demo</strong><p>Run synthetic data, inspect scores, and export reports.</p></a>
+        <a href="https://drive.google.com/file/d/1r4UBxmlSc0gAr8hjLZTfTA5j2GjQ15r3/view" target="_blank" rel="noreferrer"><span>02 · See it</span><strong>End-to-end video</strong><p>Watch the setup, tests, run, output, and limitations.</p></a>
+        <a href="https://github.com/3bud-ZC/flyrank-opportunity-workflow" target="_blank" rel="noreferrer"><span>03 · Verify it</span><strong>Public repository</strong><p>Read the implementation, tests, README, and deployment workflow.</p></a>
+        <a href="https://app.notion.com/p/3a747bf43cf3812dbf83e9a6f614eabf" target="_blank" rel="noreferrer"><span>04 · Understand it</span><strong>Capstone documentation</strong><p>Review the problem, decisions, evidence, evaluation, and launch record.</p></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell"><span>Built by Abdullah Ragab for the FlyRank General AI Fluency track.</span><span><a href="https://portfolio.abud.fun/">Portfolio</a> · <a href="mailto:s-abdallah.ali@zewailcity.edu.eg">University email</a></span></footer>
+</body>
+</html>
