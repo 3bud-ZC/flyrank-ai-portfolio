@@ -16,7 +16,7 @@ const checks = [
   ['Twitter card exists', /name="twitter:card"/.test(indexHtml)],
   ['favicon exists', /rel="icon"/.test(indexHtml)],
   ['structured data exists', /application\/ld\+json/.test(indexHtml)],
-  ['working form endpoint exists', /formsubmit\.co\/ajax\/abudfun@gmail\.com/.test(appSource)],
+  ['working form endpoint exists', /formsubmit\.co\/ajax\/s-abdallah\.ali@zewailcity\.edu\.eg/.test(appSource)],
   ['contact form validates required fields', /minLength=\{20\}/.test(appSource) && /type="email"/.test(appSource)],
   ['duplicate submit is blocked', /status === 'submitting' \|\| status === 'success'/.test(appSource)],
   ['honeypot field exists', /name="_honey"/.test(appSource)],

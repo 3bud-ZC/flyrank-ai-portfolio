@@ -16,7 +16,7 @@ The portfolio now contains one dynamic feature: a workflow contact form.
 2. The browser validates minimum lengths, email shape, and a hidden honeypot field.
 3. The submit button is disabled during the request and after success to prevent rapid duplicate sends.
 4. The frontend sends JSON to the FormSubmit AJAX endpoint.
-5. The hosted form backend forwards the submission to `abudfun@gmail.com`.
+5. The hosted form backend forwards the submission to `s-abdallah.ali@zewailcity.edu.eg`.
 6. The page displays a live success or error state.
 
 ### Activation boundary

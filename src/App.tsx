@@ -20,7 +20,7 @@ type Project = {
 
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error'
 
-const FORM_ENDPOINT = 'https://formsubmit.co/ajax/abudfun@gmail.com'
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/s-abdallah.ali@zewailcity.edu.eg'
 
 const projects: Project[] = [
   {
@@ -612,11 +612,11 @@ function ContactPage() {
       </form>
 
       <div className="contact-grid">
-        <a href="mailto:abudfun@gmail.com?subject=Workflow%20system%20inquiry">
+        <a href="mailto:s-abdallah.ali@zewailcity.edu.eg?subject=Workflow%20system%20inquiry">
           <span>Email fallback</span>
-          <strong>abudfun@gmail.com</strong>
+          <strong>s-abdallah.ali@zewailcity.edu.eg</strong>
         </a>
-        <a href="mailto:abudfun@gmail.com?subject=Book%20a%2020-minute%20project%20call">
+        <a href="mailto:s-abdallah.ali@zewailcity.edu.eg?subject=Book%20a%2020-minute%20project%20call">
           <span>Booking request</span>
           <strong>Request a 20-minute call</strong>
         </a>
@@ -719,7 +719,7 @@ function CvPage() {
       </div>
 
       <div className="button-row">
-        <a className="button primary" href="mailto:abudfun@gmail.com?subject=CV%20inquiry">
+        <a className="button primary" href="mailto:s-abdallah.ali@zewailcity.edu.eg?subject=CV%20inquiry">
           Contact me
         </a>
         <a className="button secondary" href="https://github.com/3bud-ZC" target="_blank" rel="noreferrer">
