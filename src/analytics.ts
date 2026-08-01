@@ -5,16 +5,25 @@ declare global {
   }
 }
 
-const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim()
+const measurementId =
+  import.meta.env.VITE_GA_MEASUREMENT_ID?.trim() || 'G-L9R1SMW4DF'
 
 export function initializeAnalytics() {
-  if (!measurementId || !/^G-[A-Z0-9]+$/i.test(measurementId)) return
-  if (document.querySelector(`script[data-ga4-id="${measurementId}"]`)) return
+  if (!/^G-[A-Z0-9]+$/i.test(measurementId)) return
 
   window.dataLayer = window.dataLayer || []
-  window.gtag = (...args: unknown[]) => {
-    window.dataLayer.push(args)
+
+  if (!window.gtag) {
+    window.gtag = (...args: unknown[]) => {
+      window.dataLayer.push(args)
+    }
   }
+
+  const existingScript = document.querySelector(
+    `script[src*="gtag/js?id=${measurementId}"]`,
+  )
+
+  if (existingScript) return
 
   const script = document.createElement('script')
   script.async = true
@@ -30,7 +39,7 @@ export function initializeAnalytics() {
 }
 
 export function trackPageView(route: string) {
-  if (!measurementId || !window.gtag) return
+  if (!window.gtag) return
 
   window.gtag('event', 'page_view', {
     page_title: document.title,
