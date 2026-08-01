@@ -44,6 +44,16 @@
       rel="stylesheet"
     />
 
+    <!-- Google tag (gtag.js): direct production installation for reliable GA4 collection. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L9R1SMW4DF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-L9R1SMW4DF', { send_page_view: true });
+    </script>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
