@@ -6,6 +6,7 @@ import './styles.css'
 import './week7-mobile.css'
 import './crit-fix.css'
 import './week8-9.css'
+import './mobile-final-fix.css'
 
 const root = document.getElementById('root')
 
