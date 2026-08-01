@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://3bud-zc.github.io/flyrank-ai-portfolio/sitemap.xml
+Sitemap: https://portfolio.abud.fun/sitemap.xml
